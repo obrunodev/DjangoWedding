@@ -1,16 +1,10 @@
-# web-chat-flask
+# Django Social Media
 
-### how to execute this app
+A social media app made with Django
 
-- Run these commands on Power Shell
+### Features
 
-```powershell
-set FLASK_APP=hello.py
-$env:FLASK_APP = "hello.py"
-flask run
-```
-
-TODOs:
-
-- [x] Functional chat app
-- [ ] Stylize with Bulma CSS framework
+- [ ] Register/Login system
+- [ ] Feed and posts feat
+- [ ] Comment and like posts
+- [ ] Follow other users
