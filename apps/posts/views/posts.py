@@ -6,8 +6,9 @@ from ..forms import PostForm
 
 def index(request):
     posts = Post.objects.all()
-    context = {'posts': posts}
-    return render(request, 'posts/pages/index.html', context)
+    return render(request, 'posts/pages/index.html', {
+        'posts': posts
+    })
 
 
 def create(request):
@@ -27,7 +28,21 @@ def create(request):
 
 
 def update(request, pk):
-    pass
+    post = get_object_or_404(Post, pk=pk)
+    form = PostForm(request.POST or None, instance=post)
+    if request.method == 'POST':
+        if form.is_valid():
+            form.save()
+            return redirect('posts:index')
+        return render(request, 'posts/pages/update.html', {
+            'form': form,
+            'post': post
+        })
+    else:
+        return render(request, 'posts/pages/update.html', {
+            'form': form,
+            'post': post
+        })
 
 
 def delete(request, pk):
@@ -36,5 +51,6 @@ def delete(request, pk):
         post.delete()
         return redirect('posts:index')
     else:
-        context = {'post': post}
-        return render(request, 'posts/pages/delete.html', context)
+        return render(request, 'posts/pages/delete.html', {
+            'post': post
+        })
