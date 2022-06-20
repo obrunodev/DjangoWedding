@@ -1,7 +1,8 @@
+from django.contrib import messages
 from django.shortcuts import get_object_or_404, redirect, render
 
-from ..models import Post
 from ..forms import PostForm
+from ..models import Post
 
 
 def index(request):
@@ -16,6 +17,7 @@ def create(request):
         form = PostForm(request.POST or None)
         if form.is_valid():
             form.save()
+            messages.success(request, 'Seu post foi publicado! :)')
             return redirect('posts:index')
         return render(request, 'posts/pages/create.html', {
             'form': form
@@ -33,6 +35,7 @@ def update(request, pk):
     if request.method == 'POST':
         if form.is_valid():
             form.save()
+            messages.success(request, 'Seu post foi atualizado!')
             return redirect('posts:index')
         return render(request, 'posts/pages/update.html', {
             'form': form,
@@ -49,6 +52,7 @@ def delete(request, pk):
     post = get_object_or_404(Post, pk=pk)
     if request.method == 'POST':
         post.delete()
+        messages.success(request, 'Seu post foi removido! :(')
         return redirect('posts:index')
     else:
         return render(request, 'posts/pages/delete.html', {

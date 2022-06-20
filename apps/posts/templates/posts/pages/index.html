@@ -9,6 +9,9 @@
             Novo post
         </a>
         <h1>Feed de posts</h1>
+
+        {% include 'partials/message.html' %}
+
         <ul>
             {% for post in posts %}
                 <li>
