@@ -1,4 +1,4 @@
-from django.shortcuts import redirect, render
+from django.shortcuts import get_object_or_404, redirect, render
 
 from ..models import Post
 from ..forms import PostForm
@@ -16,17 +16,25 @@ def create(request):
         if form.is_valid():
             form.save()
             return redirect('posts:index')
-        context = {'form': form}
-        return render(request, 'posts/pages/create.html', context)
+        return render(request, 'posts/pages/create.html', {
+            'form': form
+        })
     else:
         form = PostForm()
-        context = {'form': form}
-        return render(request, 'posts/pages/create.html', context)
+        return render(request, 'posts/pages/create.html', {
+            'form': form
+        })
 
 
-def update(request):
+def update(request, pk):
     pass
 
 
-def delete(request):
-    pass
+def delete(request, pk):
+    post = get_object_or_404(Post, pk=pk)
+    if request.method == 'POST':
+        post.delete()
+        return redirect('posts:index')
+    else:
+        context = {'post': post}
+        return render(request, 'posts/pages/delete.html', context)
