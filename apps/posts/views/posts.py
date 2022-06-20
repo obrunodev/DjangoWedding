@@ -16,7 +16,8 @@ def create(request):
         if form.is_valid():
             form.save()
             return redirect('posts:index')
-        return redirect('posts:create')
+        context = {'form': form}
+        return render(request, 'posts/pages/create.html', context)
     else:
         form = PostForm()
         context = {'form': form}
