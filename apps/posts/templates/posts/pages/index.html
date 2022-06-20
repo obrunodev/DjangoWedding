@@ -5,7 +5,15 @@
     {% include 'partials/navbar.html' %}
 
     <div class="container mt-5">
+        <a href="{% url 'posts:create' %}" class="btn btn-primary">
+            Novo post
+        </a>
         <h1>Feed de posts</h1>
+        <ul>
+            {% for post in posts %}
+                <li>{{ post }}</li>
+            {% endfor %}
+        </ul>
     </div>
 
 {% endblock content %}
