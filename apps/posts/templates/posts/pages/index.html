@@ -12,7 +12,9 @@
         <ul>
             {% for post in posts %}
                 <li>
-                    {{ post }}
+                    {{ post.text }} - Postado {{ post.created_at }} 
+                    {% if post.created_at != post.updated_at %}(Editado){% endif %}
+                    <br>
                     <a href="{% url 'posts:update' post.pk %}" class="text-success">Editar</a>
                     <a href="{% url 'posts:delete' post.pk %}" class="text-danger">Remover</a>
                 </li>

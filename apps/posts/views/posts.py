@@ -5,7 +5,7 @@ from ..forms import PostForm
 
 
 def index(request):
-    posts = Post.objects.all()
+    posts = Post.objects.order_by('-created_at')
     return render(request, 'posts/pages/index.html', {
         'posts': posts
     })
