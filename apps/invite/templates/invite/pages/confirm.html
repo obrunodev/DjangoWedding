@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+{% block title %}Você está convidado{% endblock title %}
+{% block content %}
+
+    {% include 'partials/navbar.html' %}
+
+    <div class="container-fluid mt-3">
+        <h3 class="text-center mt-4">Olá, {{ guest.first_name }}</h3>
+        <p class="text-center mb-4">Você está convidado(a) para o nosso casamento!</p>
+
+        {% include 'partials/message.html' %}
+
+        <div class="card m-auto" style="max-width: 500px;">
+            <div class="card-header">
+                <h3>Confirme seus dados dados</h3>
+            </div>
+            <div class="card-body">
+
+                <form action="" method="post">
+                    {% csrf_token %}
+        
+                    {% for field in form %}
+                        {% if field.label == 'Adultos' %}
+                            <label for="{{ field.id_for_label }}" class="form-label">
+                                Número de {{ field.label }} incluindo você:
+                                <p class="form-text mb-0">Máximo de adultos: {{ guest.adult_guest }}</p>
+                            </label>
+                        {% elif field.label == 'Crianças' %}
+                            <label for="{{ field.id_for_label }}" class="form-label">
+                                Número de {{ field.label }}:
+                                <p class="form-text mb-0">Máximo de crianças: {{ guest.child_guest }}</p>
+                            </label>
+                        {% else %}
+                            <label for="{{ field.id_for_label }}" class="form-label">{{ field.label }}</label>
+                        {% endif %}
+                        <input
+                        type="{{ field.field.widget.input_type }}"
+                        class="form-control mb-3"
+                        name="{{ field.html_name }}"
+                        {% if field.valule %}
+                            value="{{ field.value }}"
+                        {% endif %}
+                        >
+                    {% endfor %}
+        
+                    <button type="submit" class="btn btn-success mt-3">Confirmar presença</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+{% endblock content %}

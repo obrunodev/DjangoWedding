@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+{% block title %}Você está convidado{% endblock title %}
+{% block content %}
+
+    {% include 'partials/navbar.html' %}
+
+    <div class="container-fluid mt-3">
+        <h3 class="text-center my-4">Lista de convidados</h3>
+
+        <h4><span class="text-success">Confirmados: {{ confirmados }}</span> -  Pendentes: {{ pendentes }}</h4>
+        
+        <table class="table table-bordered table-striped table-hover">
+            <thead class="table-dark">
+                <tr>
+                    <th>ID do convite</th>
+                    <th>Nome completo</th>
+                    <th>Whatsapp</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for guest in guests %}
+                    <tr>
+                        <td>{{ guest.guest_id }}</td>
+                        <td>{{ guest.first_name }} {{ guest.last_name }}</td>
+                        <td>{{ guest.whatsapp }}</td>
+                        <td>
+                            {% if guest.invite_status == 0 %}
+                                Pendente
+                            {% elif guest.invite_status == 1 %}
+                                <span class="text-success fw-bold">Confirmado</span>
+                            {% endif %}
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+{% endblock content %}
